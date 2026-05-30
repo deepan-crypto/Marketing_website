@@ -401,7 +401,7 @@ function Hero() {
             <Sparkles size={16} />
             Hot & Fresh Tamil Nadu Crunch
           </div>
-          <h1 className="font-display text-[clamp(3.25rem,8vw,7.9rem)] font-black leading-[0.9] tracking-normal text-ink">
+          <h1 className="font-display text-[clamp(2.8rem,6.6vw,6.65rem)] font-black leading-[0.92] tracking-normal text-ink">
             Tamil Nadu&apos;s Favourite Crispy Banana Chips
           </h1>
           <p className="mt-6 text-xl font-black text-leaf sm:text-2xl">
