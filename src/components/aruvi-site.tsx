@@ -72,6 +72,7 @@ const products = [
     note: "Fast-moving single-serve pack for tea shops, stores, and counters.",
     scale: "w-40 sm:w-48",
     src: "/images/aruvi-pack-blue.svg",
+    specs: ["Product: Banana Chips", "Scope: All over Tamil Nadu", "Packing: 100gm", "MRP: Rs 50"],
   },
   {
     size: "200gm Pack",
@@ -79,7 +80,16 @@ const products = [
     note: "Family-size crunch for supermarkets, bakeries, and premium retail.",
     scale: "w-52 sm:w-64",
     src: "/images/aruvi-pack-red.svg",
+    specs: ["Product: Banana Chips", "Scope: All over Tamil Nadu", "Packing: 200gm", "MRP: Rs 80"],
   },
+];
+
+const supplyDetails = [
+  ["Product", "Banana Chips"],
+  ["Scope of Supply", "All over Tamil Nadu"],
+  ["Packing Size", "200gm, 100gm"],
+  ["MRP", "Rs 80 for 200gm / Rs 50 for 100gm"],
+  ["Distributor Margin", "20% from MRP"],
 ];
 
 const stats = [
@@ -324,19 +334,10 @@ function ProductPackTrio() {
       transition={{ duration: 1, delay: 0.75, ease: [0.16, 1, 0.3, 1] }}
     >
       <div className="absolute inset-x-12 bottom-5 h-24 rounded-full bg-leaf/25 blur-3xl" />
-      {packs.map((pack, index) => (
-        <motion.div
+      {packs.map((pack) => (
+        <div
           key={pack.src}
           className={cn("absolute aspect-[4/3]", pack.className, pack.z)}
-          animate={{
-            y: [0, index === 1 ? -10 : -6, 0],
-            rotate: index === 0 ? [-8, -5, -8] : index === 2 ? [8, 5, 8] : [0, 2, 0],
-          }}
-          transition={{
-            duration: 4.6 + index * 0.35,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
         >
           <Image
             src={pack.src}
@@ -346,7 +347,7 @@ function ProductPackTrio() {
             priority
             className="object-contain drop-shadow-[0_34px_42px_rgba(21,88,41,0.28)]"
           />
-        </motion.div>
+        </div>
       ))}
     </motion.div>
   );
@@ -553,13 +554,36 @@ function Products() {
                     {product.price}
                   </p>
                   <p className="mt-4 leading-7 text-ink/64">{product.note}</p>
-                  <button className="focus-ring mt-7 inline-flex items-center gap-2 rounded-full bg-leaf px-5 py-3 font-black text-white transition hover:-translate-y-1 hover:bg-ink">
-                    View Pack
+                  <dl className="mt-5 grid gap-2">
+                    {product.specs.map((spec) => {
+                      const [label, value] = spec.split(": ");
+                      return (
+                        <div key={spec} className="flex flex-wrap items-center justify-between gap-2 rounded-2xl bg-cream/75 px-4 py-2 text-sm">
+                          <dt className="font-black text-leaf">{label}</dt>
+                          <dd className="font-bold text-ink/72">{value}</dd>
+                        </div>
+                      );
+                    })}
+                  </dl>
+                  <a
+                    href="#contact"
+                    aria-label={`Enquire about ${product.size}`}
+                    className="focus-ring mt-7 inline-flex items-center gap-2 rounded-full bg-leaf px-5 py-3 font-black text-white transition hover:-translate-y-1 hover:bg-ink"
+                  >
+                    Enquire This Pack
                     <ArrowRight size={18} />
-                  </button>
+                  </a>
                 </div>
               </div>
             </motion.article>
+          ))}
+        </div>
+        <div className="reveal-card mt-8 grid gap-3 rounded-[28px] border border-leaf/12 bg-white/82 p-5 shadow-[0_22px_70px_rgba(46,139,87,0.10)] backdrop-blur sm:grid-cols-2 lg:grid-cols-5">
+          {supplyDetails.map(([label, value]) => (
+            <div key={label} className="rounded-2xl bg-[#f6fff4] p-4">
+              <p className="text-xs font-black uppercase tracking-[0.18em] text-leaf">{label}</p>
+              <p className="mt-2 text-base font-black text-ink">{value}</p>
+            </div>
           ))}
         </div>
       </div>
