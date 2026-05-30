@@ -1,0 +1,150 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  background: #fff7df;
+  color: #182215;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
+  background:
+    radial-gradient(circle at top left, rgba(244, 196, 48, 0.22), transparent 28rem),
+    linear-gradient(180deg, #fff9e6 0%, #fffdf6 52%, #f4fff1 100%);
+  color: #182215;
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+::selection {
+  background: #f4c430;
+  color: #182215;
+}
+
+.grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 80;
+  opacity: 0.15;
+  background-image:
+    linear-gradient(rgba(24, 34, 21, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(24, 34, 21, 0.04) 1px, transparent 1px);
+  background-size: 3px 3px;
+  mix-blend-mode: multiply;
+}
+
+.section-shell {
+  width: min(1180px, calc(100% - 32px));
+  margin-inline: auto;
+}
+
+.focus-ring {
+  outline: 2px solid transparent;
+  outline-offset: 4px;
+}
+
+.focus-ring:focus-visible {
+  outline-color: #2e8b57;
+}
+
+.chip-shadow {
+  filter: drop-shadow(0 18px 26px rgba(112, 76, 8, 0.22));
+}
+
+.mask-fade {
+  mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent);
+}
+
+.hero-aura {
+  background:
+    radial-gradient(circle at 52% 38%, rgba(255, 255, 255, 0.86), transparent 14rem),
+    radial-gradient(circle at 18% 24%, rgba(244, 196, 48, 0.58), transparent 24rem),
+    radial-gradient(circle at 82% 18%, rgba(255, 140, 0, 0.32), transparent 22rem),
+    radial-gradient(circle at 72% 76%, rgba(46, 139, 87, 0.26), transparent 23rem),
+    linear-gradient(135deg, #fff8cf 0%, #fffdf2 48%, #ecffe5 100%);
+  background-size: 130% 130%;
+}
+
+.pack-shine {
+  background:
+    linear-gradient(
+      105deg,
+      transparent 18%,
+      rgba(255, 255, 255, 0.36) var(--shine-x),
+      transparent 58%
+    );
+  mix-blend-mode: screen;
+}
+
+.tn-marker {
+  width: 15px;
+  height: 15px;
+  border: 3px solid white;
+  border-radius: 999px;
+  background: #ff8c00;
+  box-shadow: 0 0 0 0 rgba(255, 140, 0, 0.65);
+  animation: marker-pulse 1.8s infinite;
+}
+
+.tn-marker::after {
+  content: "";
+  position: absolute;
+  inset: -11px;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: inherit;
+}
+
+.marquee-track {
+  animation: marquee 26s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marker-pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(0.86);
+    box-shadow: 0 0 0 0 rgba(255, 140, 0, 0.65);
+  }
+  70% {
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow: 0 0 0 16px rgba(255, 140, 0, 0);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(0.86);
+    box-shadow: 0 0 0 0 rgba(255, 140, 0, 0);
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-33.333%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
