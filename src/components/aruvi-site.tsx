@@ -334,10 +334,16 @@ function ProductPackTrio() {
       transition={{ duration: 1, delay: 0.75, ease: [0.16, 1, 0.3, 1] }}
     >
       <div className="absolute inset-x-12 bottom-5 h-24 rounded-full bg-leaf/25 blur-3xl" />
-      {packs.map((pack) => (
-        <div
+      {packs.map((pack, index) => (
+        <motion.div
           key={pack.src}
-          className={cn("absolute aspect-[4/3]", pack.className, pack.z)}
+          className={cn("absolute aspect-[4/3] transform-gpu", pack.className, pack.z)}
+          animate={{ y: [0, index === 1 ? -10 : -7, 0] }}
+          transition={{
+            duration: 4.8 + index * 0.35,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
         >
           <Image
             src={pack.src}
@@ -347,7 +353,7 @@ function ProductPackTrio() {
             priority
             className="object-contain drop-shadow-[0_34px_42px_rgba(21,88,41,0.28)]"
           />
-        </div>
+        </motion.div>
       ))}
     </motion.div>
   );
