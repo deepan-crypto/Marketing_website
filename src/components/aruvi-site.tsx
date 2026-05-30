@@ -71,12 +71,14 @@ const products = [
     price: "50",
     note: "Fast-moving single-serve pack for tea shops, stores, and counters.",
     scale: "w-40 sm:w-48",
+    src: "/images/aruvi-pack-blue.svg",
   },
   {
     size: "200gm Pack",
     price: "80",
     note: "Family-size crunch for supermarkets, bakeries, and premium retail.",
     scale: "w-52 sm:w-64",
+    src: "/images/aruvi-pack-red.svg",
   },
 ];
 
@@ -109,10 +111,9 @@ const testimonials = [
 ];
 
 const gallery = [
-  { title: "Signature Pack", src: "/images/aruvi-pack.svg" },
-  { title: "Golden Crunch", src: "/images/banana-chip.svg" },
-  { title: "Retail Ready", src: "/images/aruvi-pack.svg" },
-  { title: "Fresh Batch", src: "/images/banana-chip.svg" },
+  { title: "Blue Pack", src: "/images/aruvi-pack-blue.svg" },
+  { title: "Green Pack", src: "/images/aruvi-pack.svg" },
+  { title: "Red Pack", src: "/images/aruvi-pack-red.svg" },
 ];
 
 function cn(...classes: Array<string | false | null | undefined>) {
@@ -240,7 +241,17 @@ function Header() {
   );
 }
 
-function ProductPack({ className = "", priority = false }: { className?: string; priority?: boolean }) {
+function ProductPack({
+  className = "",
+  priority = false,
+  src = "/images/aruvi-pack.svg",
+  alt = "ARUVI Banana Chips product pack",
+}: {
+  className?: string;
+  priority?: boolean;
+  src?: string;
+  alt?: string;
+}) {
   const ref = useRef<HTMLDivElement>(null);
   const rotateX = useSpring(useMotionValue(0), { stiffness: 150, damping: 18 });
   const rotateY = useSpring(useMotionValue(0), { stiffness: 150, damping: 18 });
@@ -272,13 +283,71 @@ function ProductPack({ className = "", priority = false }: { className?: string;
         style={{ "--shine-x": shineX } as React.CSSProperties}
       />
       <Image
-        src="/images/aruvi-pack.svg"
-        alt="ARUVI Banana Chips green product pack"
+        src={src}
+        alt={alt}
         fill
         sizes="(max-width: 768px) 78vw, 520px"
         priority={priority}
         className="object-contain drop-shadow-[0_36px_45px_rgba(21,88,41,0.28)]"
       />
+    </motion.div>
+  );
+}
+
+function ProductPackTrio() {
+  const packs = [
+    {
+      src: "/images/aruvi-pack-blue.svg",
+      alt: "ARUVI Banana Chips blue pack",
+      className: "left-[1%] top-[17%] w-[43%] -rotate-8 sm:left-[3%] sm:w-[42%]",
+      z: "z-10",
+    },
+    {
+      src: "/images/aruvi-pack.svg",
+      alt: "ARUVI Banana Chips green pack",
+      className: "left-[28%] top-[2%] w-[48%] rotate-0 sm:w-[47%]",
+      z: "z-20",
+    },
+    {
+      src: "/images/aruvi-pack-red.svg",
+      alt: "ARUVI Banana Chips red pack",
+      className: "right-[1%] top-[17%] w-[43%] rotate-8 sm:right-[3%] sm:w-[42%]",
+      z: "z-10",
+    },
+  ];
+
+  return (
+    <motion.div
+      className="relative mx-auto aspect-[1.28/1] w-[min(94vw,700px)]"
+      initial={{ opacity: 0, scale: 0.78, rotate: -4 }}
+      animate={{ opacity: 1, scale: 1, rotate: 0 }}
+      transition={{ duration: 1, delay: 0.75, ease: [0.16, 1, 0.3, 1] }}
+    >
+      <div className="absolute inset-x-12 bottom-5 h-24 rounded-full bg-leaf/25 blur-3xl" />
+      {packs.map((pack, index) => (
+        <motion.div
+          key={pack.src}
+          className={cn("absolute aspect-[4/3]", pack.className, pack.z)}
+          animate={{
+            y: [0, index === 1 ? -10 : -6, 0],
+            rotate: index === 0 ? [-8, -5, -8] : index === 2 ? [8, 5, 8] : [0, 2, 0],
+          }}
+          transition={{
+            duration: 4.6 + index * 0.35,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        >
+          <Image
+            src={pack.src}
+            alt={pack.alt}
+            fill
+            sizes="(max-width: 768px) 42vw, 330px"
+            priority
+            className="object-contain drop-shadow-[0_34px_42px_rgba(21,88,41,0.28)]"
+          />
+        </motion.div>
+      ))}
     </motion.div>
   );
 }
@@ -347,15 +416,7 @@ function Hero() {
             </a>
           </div>
         </motion.div>
-        <motion.div
-          initial={{ opacity: 0, scale: 0.78, rotate: -6 }}
-          animate={{ opacity: 1, scale: 1, rotate: 0 }}
-          transition={{ duration: 1, delay: 0.75, ease: [0.16, 1, 0.3, 1] }}
-          className="relative"
-        >
-          <div className="absolute inset-x-10 bottom-8 h-24 rounded-full bg-leaf/25 blur-3xl" />
-          <ProductPack className="w-[min(70vw,520px)] sm:w-[min(76vw,620px)] lg:w-[min(48vw,620px)]" priority />
-        </motion.div>
+        <ProductPackTrio />
       </div>
       <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-[#fffdf6] to-transparent" />
     </section>
@@ -473,7 +534,7 @@ function Products() {
                     className={cn("relative aspect-[4/3]", product.scale)}
                   >
                     <Image
-                      src="/images/aruvi-pack.svg"
+                      src={product.src}
                       alt={`${product.size} ARUVI Banana Chips pack`}
                       fill
                       sizes="280px"
@@ -725,7 +786,7 @@ function Gallery() {
           title="A visual identity made for snack aisles."
           copy="Bold green, golden chips, and warm highlights give ARUVI a premium but instantly appetising shelf presence."
         />
-        <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-14 grid gap-5 sm:grid-cols-3">
           {gallery.map((item, index) => (
             <button
               key={`${item.title}-${index}`}
@@ -741,8 +802,7 @@ function Gallery() {
                   height={320}
                   loading="lazy"
                   className={cn(
-                    "max-h-[86%] w-auto object-contain transition duration-500 group-hover:scale-110",
-                    item.src.includes("banana-chip") && "h-auto w-44",
+                    "max-h-[88%] w-auto object-contain transition duration-500 group-hover:scale-110",
                   )}
                 />
               </span>
