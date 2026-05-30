@@ -307,19 +307,19 @@ function ProductPack({
 function ProductPackTrio() {
   const packs = [
     {
-      src: "/images/aruvi-pack-blue.svg",
+      src: "/images/aruvi-pack-blue.png",
       alt: "ARUVI Banana Chips blue pack",
       className: "left-[1%] top-[17%] w-[43%] -rotate-8 sm:left-[3%] sm:w-[42%]",
       z: "z-10",
     },
     {
-      src: "/images/aruvi-pack.svg",
+      src: "/images/aruvi-pack.png",
       alt: "ARUVI Banana Chips green pack",
       className: "left-[28%] top-[2%] w-[48%] rotate-0 sm:w-[47%]",
       z: "z-20",
     },
     {
-      src: "/images/aruvi-pack-red.svg",
+      src: "/images/aruvi-pack-red.png",
       alt: "ARUVI Banana Chips red pack",
       className: "right-[1%] top-[17%] w-[43%] rotate-8 sm:right-[3%] sm:w-[42%]",
       z: "z-10",
