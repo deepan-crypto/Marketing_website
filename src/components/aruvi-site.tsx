@@ -349,18 +349,97 @@ function Marquee() {
 }
 
 function About() {
+  const aboutFeatures = [
+    { icon: Leaf, title: "Fresh ingredients", desc: "Premium bananas sourced from local farms, fried in fresh oil for a cleaner, golden crunch." },
+    { icon: Wheat, title: "Traditional taste", desc: "Inspired by generations of Tamil Nadu snack culture — familiar flavour, perfected." },
+    { icon: PackageCheck, title: "Modern packaging", desc: "Bold, shelf-ready packs designed for instant recognition and lasting freshness." },
+  ];
+
   return (
     <section id="about" className="section-panel py-24 sm:py-32">
       <div className="section-shell">
-        <SectionHeading eyebrow="Our Story" title="Traditional taste in a shelf-ready premium pack." copy="ARUVI Banana Chips brings the familiar comfort of Tamil Nadu snack culture into a modern FMCG format, made with premium bananas, fresh oil, no added colour, and no added sugar." />
-        <div className="mt-14 grid gap-5 md:grid-cols-3">
-          {["Fresh ingredients", "Traditional taste", "Modern packaging"].map((title) => (
-            <motion.article key={title} className="reveal-card rounded-[24px] border border-leaf/12 bg-white/78 p-7 shadow-[0_24px_70px_rgba(46,139,87,0.10)] backdrop-blur transition hover:-translate-y-2 hover:border-banana" whileHover={{ scale: 1.02 }}>
-              <Leaf className="text-leaf" />
-              <h3 className="mt-7 text-2xl font-black text-ink">{title}</h3>
-              <p className="mt-4 leading-7 text-ink/64">Premium bananas, fresh oil, clean-label ingredients, and a bold ARUVI pack built for Tamil Nadu retail shelves.</p>
-            </motion.article>
-          ))}
+        <div className="grid items-center gap-12 lg:grid-cols-2">
+          {/* Left — Hero food image */}
+          <motion.div
+            className="reveal-card relative mx-auto w-full max-w-lg"
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.7 }}
+          >
+            <div className="relative overflow-hidden rounded-[32px] shadow-[0_32px_100px_rgba(46,139,87,0.18)]">
+              <Image
+                src="/images/about-hero-chips.png"
+                alt="Bowl of crispy banana chips with fresh bananas"
+                width={600}
+                height={700}
+                className="h-auto w-full object-cover"
+              />
+              {/* Warm overlay for blending */}
+              <div className="absolute inset-0 bg-gradient-to-t from-banana/10 via-transparent to-leaf/5" />
+            </div>
+
+            {/* Floating chip decorations */}
+            <motion.div
+              className="absolute -right-6 -top-6 z-10 chip-shadow"
+              animate={{ y: [0, -10, 0], rotate: [0, 12, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <Image src="/images/banana-chip.svg" alt="" width={48} height={48} />
+            </motion.div>
+            <motion.div
+              className="absolute -bottom-4 -left-4 z-10 chip-shadow"
+              animate={{ y: [0, 8, 0], rotate: [0, -15, 0] }}
+              transition={{ duration: 3.6, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+            >
+              <Image src="/images/banana-chip.svg" alt="" width={38} height={38} />
+            </motion.div>
+            <motion.div
+              className="absolute -right-3 bottom-1/4 z-10 chip-shadow"
+              animate={{ y: [0, -6, 0], rotate: [0, 8, 0] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            >
+              <Image src="/images/banana-chip.svg" alt="" width={32} height={32} />
+            </motion.div>
+
+            {/* Decorative blob behind image */}
+            <div className="absolute -bottom-8 -left-8 -z-10 h-48 w-48 rounded-full bg-banana/30 blur-3xl" />
+            <div className="absolute -right-8 -top-8 -z-10 h-40 w-40 rounded-full bg-leaf/20 blur-3xl" />
+          </motion.div>
+
+          {/* Right — Heading + feature cards */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.7, delay: 0.15 }}
+          >
+            <p className="text-sm font-black uppercase tracking-[0.28em] text-leaf">Our Story</p>
+            <h2 className="mt-3 font-display text-[clamp(2rem,4vw,3.8rem)] font-black leading-[0.98] tracking-normal text-ink">
+              Traditional taste in a shelf&#8209;ready premium pack.
+            </h2>
+            <p className="mt-5 text-base leading-8 text-ink/68 sm:text-lg">
+              ARUVI Banana Chips brings the familiar comfort of Tamil Nadu snack culture into a modern FMCG format, made with premium bananas, fresh oil, no added colour, and no added sugar.
+            </p>
+
+            <div className="mt-10 grid gap-4">
+              {aboutFeatures.map(({ icon: Icon, title, desc }) => (
+                <motion.article
+                  key={title}
+                  className="reveal-card flex items-start gap-5 rounded-[22px] border border-leaf/12 bg-white/78 p-5 shadow-[0_16px_50px_rgba(46,139,87,0.08)] backdrop-blur transition hover:-translate-y-1 hover:border-banana hover:shadow-glow"
+                  whileHover={{ scale: 1.015 }}
+                >
+                  <div className="grid h-12 w-12 flex-shrink-0 place-items-center rounded-2xl bg-ink text-banana">
+                    <Icon size={22} />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-black text-ink">{title}</h3>
+                    <p className="mt-1 text-sm leading-6 text-ink/62">{desc}</p>
+                  </div>
+                </motion.article>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>
@@ -576,33 +655,33 @@ function FlavorCard({ card }: { card: typeof flavorCards[number] }) {
           </motion.div>
         ))}
 
-        {/* Pack image */}
+        {/* Chip bowl image — big hero */}
         <motion.div
           className="relative z-[5]"
           animate={{ y: isHovered ? -12 : 0, scale: isHovered ? 1.08 : 1 }}
           transition={{ duration: 0.4, ease: "easeOut" }}
         >
           <Image
-            src={card.packImage}
-            alt={card.name}
-            width={200}
+            src={card.chipImage}
+            alt={`${card.name} chips`}
+            width={220}
             height={220}
-            className="drop-shadow-2xl"
+            className="rounded-3xl object-cover drop-shadow-2xl shadow-lg"
           />
         </motion.div>
 
-        {/* Bowl of chips beside the pack */}
+        {/* Packet image — small beside the bowl */}
         <motion.div
-          className="absolute bottom-3 right-4 z-[6]"
+          className="absolute bottom-3 left-4 z-[6]"
           animate={{ y: isHovered ? -6 : 0, scale: isHovered ? 1.05 : 1 }}
           transition={{ duration: 0.4, delay: 0.05 }}
         >
           <Image
-            src={card.chipImage}
-            alt={`${card.name} chips`}
-            width={110}
-            height={110}
-            className="rounded-2xl object-cover shadow-lg"
+            src={card.packImage}
+            alt={card.name}
+            width={80}
+            height={95}
+            className="drop-shadow-xl"
           />
         </motion.div>
       </div>
