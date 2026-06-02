@@ -186,8 +186,8 @@ function Header() {
     <header className="fixed left-0 right-0 top-0 z-50 px-4 py-4">
       <nav className="mx-auto flex max-w-6xl items-center justify-between rounded-full border border-white/60 bg-white/72 px-4 py-3 shadow-[0_18px_60px_rgba(46,139,87,0.12)] backdrop-blur-2xl">
         <a href="#hero" className="focus-ring flex items-center gap-3 rounded-full" aria-label="ARUVI home">
-          <span className="grid h-10 w-10 place-items-center rounded-full bg-leaf text-sm font-black text-white shadow-pack">A</span>
-          <span className="font-black tracking-tight text-ink">ARUVI</span>
+          <Image src="/images/aruvi-logo.jpg" alt="ARUVI Hot Chips" width={48} height={48} className="rounded-full object-cover" />
+          <span className="font-black tracking-tight text-ink hidden sm:block">ARUVI</span>
         </a>
         <div className="hidden items-center gap-1 md:flex">
           {navItems.map((item) => (
@@ -862,7 +862,7 @@ function Footer() {
   return (
     <footer className="bg-[#10170e] px-4 py-12 text-white">
       <div className="mx-auto flex max-w-6xl flex-col gap-8 md:flex-row md:items-center md:justify-between">
-        <div className="flex items-center gap-3"><span className="grid h-11 w-11 place-items-center rounded-full bg-banana text-base font-black text-ink">A</span><div><p className="font-black">ARUVI Banana Chips</p><p className="text-sm text-white/55">Fresh. Crunchy. Irresistible.</p></div></div>
+        <div className="flex items-center gap-3"><Image src="/images/aruvi-logo.jpg" alt="ARUVI Hot Chips" width={48} height={48} className="rounded-full object-cover" /><div><p className="font-black">ARUVI Banana Chips</p><p className="text-sm text-white/55">Fresh. Crunchy. Irresistible.</p></div></div>
         <div className="flex flex-wrap gap-3">{navItems.map((item) => <a key={item} href={`#${item.toLowerCase()}`} className="rounded-full bg-white/8 px-4 py-2 text-sm font-bold transition hover:bg-white/14">{item}</a>)}</div>
         <div className="flex gap-2">{[Instagram, Mail, Phone].map((Icon, index) => <a key={index} href={index === 0 ? "https://instagram.com" : index === 1 ? "#contact" : "tel:+918825742002"} aria-label={index === 0 ? "ARUVI Instagram" : index === 1 ? "Contact ARUVI" : "Call ARUVI"} className="grid h-11 w-11 place-items-center rounded-full bg-white/8 transition hover:bg-banana hover:text-ink"><Icon size={18} /></a>)}</div>
       </div>
