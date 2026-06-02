@@ -6,7 +6,9 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   ArrowRight,
+  Award,
   Factory,
+  Flame,
   Instagram,
   Leaf,
   Mail,
@@ -21,8 +23,9 @@ import {
   Truck,
   Wheat,
   X,
+  Zap,
 } from "lucide-react";
-import { FormEvent, useEffect, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -81,11 +84,48 @@ const whyCards = [
   ["Available Across Tamil Nadu", "Built for retail partners, distributors, and fast-moving shelves.", Store],
 ] as const;
 
-const gallery = [
-  ["Blue Pack", "/images/aruvi-pack-blue.svg"],
-  ["Green Pack", "/images/aruvi-pack.svg"],
-  ["Red Pack", "/images/aruvi-pack-red.svg"],
+const flavorCards = [
+  {
+    emoji: "🧂",
+    name: "Classic Salted",
+    tagline: "Thin, crispy, perfectly seasoned.",
+    packImage: "/images/aruvi-pack-blue.svg",
+    chipImage: "/images/chips-classic-salted.png",
+    badge: "🏆 Best Seller",
+    badgeColor: "from-amber-400 to-yellow-500",
+    accentColor: "#3b82f6",
+    glowColor: "rgba(59, 130, 246, 0.35)",
+  },
+  {
+    emoji: "🌶️",
+    name: "Spicy Masala",
+    tagline: "A fiery crunch with every bite.",
+    packImage: "/images/aruvi-pack-red.svg",
+    chipImage: "/images/chips-spicy-masala.png",
+    badge: "🔥 Most Ordered",
+    badgeColor: "from-red-400 to-orange-500",
+    accentColor: "#ef4444",
+    glowColor: "rgba(239, 68, 68, 0.35)",
+  },
+  {
+    emoji: "🥥",
+    name: "Coconut Special",
+    tagline: "Traditional taste with a modern twist.",
+    packImage: "/images/aruvi-pack.svg",
+    chipImage: "/images/chips-coconut-special.png",
+    badge: "⭐ Customer Favorite",
+    badgeColor: "from-emerald-400 to-green-500",
+    accentColor: "#2E8B57",
+    glowColor: "rgba(46, 139, 87, 0.35)",
+  },
 ] as const;
+
+const trustBadges = [
+  { icon: "🌿", label: "Natural Ingredients" },
+  { icon: "🚫", label: "No Preservatives" },
+  { icon: "🔥", label: "Freshly Prepared" },
+  { icon: "⭐", label: "Loved by Thousands" },
+];
 
 const testimonials = [
   ["ARUVI packs look premium on shelf, and the product moves quickly because the crunch is consistent.", "S. Prakash", "Distributor, Coimbatore"],
@@ -480,36 +520,159 @@ function Testimonials() {
   );
 }
 
-function Gallery() {
-  const [active, setActive] = useState<(typeof gallery)[number] | null>(null);
+function FlavorCard({ card }: { card: typeof flavorCards[number] }) {
+  const [isHovered, setIsHovered] = useState(false);
+  const chipPositions = useMemo(() => [
+    { x: -45, y: -30, rotate: -25, delay: 0 },
+    { x: 50, y: -20, rotate: 15, delay: 0.05 },
+    { x: -35, y: 40, rotate: 30, delay: 0.1 },
+    { x: 55, y: 35, rotate: -20, delay: 0.08 },
+    { x: 0, y: -45, rotate: 10, delay: 0.03 },
+    { x: -20, y: 55, rotate: -35, delay: 0.12 },
+  ], []);
 
+  return (
+    <motion.article
+      className="reveal-card group relative overflow-hidden rounded-[30px] border border-leaf/12 bg-white shadow-[0_24px_80px_rgba(46,139,87,0.1)] transition-shadow duration-500"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      whileHover={{ y: -8 }}
+      style={{ willChange: "transform" }}
+    >
+      {/* Glow effect on hover */}
+      <motion.div
+        className="pointer-events-none absolute -inset-1 z-0 rounded-[32px]"
+        animate={{
+          boxShadow: isHovered
+            ? `0 0 60px 10px ${card.glowColor}, 0 0 120px 40px ${card.glowColor}`
+            : "0 0 0px 0px transparent",
+        }}
+        transition={{ duration: 0.4 }}
+      />
+
+      {/* Badge */}
+      <div className={`absolute left-4 top-4 z-20 rounded-full bg-gradient-to-r ${card.badgeColor} px-4 py-1.5 text-xs font-black text-white shadow-lg`}>
+        {card.badge}
+      </div>
+
+      {/* Product visual area */}
+      <div className="relative flex aspect-[4/3.2] items-center justify-center overflow-hidden rounded-t-[30px] bg-radial-warm p-6">
+        {/* Scattered chips on hover */}
+        {chipPositions.map((pos, i) => (
+          <motion.div
+            key={i}
+            className="pointer-events-none absolute z-10"
+            style={{ left: "50%", top: "50%" }}
+            animate={{
+              x: isHovered ? pos.x : 0,
+              y: isHovered ? pos.y : 0,
+              rotate: isHovered ? pos.rotate : 0,
+              opacity: isHovered ? 1 : 0,
+              scale: isHovered ? 1 : 0.3,
+            }}
+            transition={{ duration: 0.45, delay: pos.delay, ease: "backOut" }}
+          >
+            <Image src="/images/banana-chip.svg" alt="" width={28} height={28} className="chip-shadow" />
+          </motion.div>
+        ))}
+
+        {/* Pack image */}
+        <motion.div
+          className="relative z-[5]"
+          animate={{ y: isHovered ? -12 : 0, scale: isHovered ? 1.08 : 1 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+        >
+          <Image
+            src={card.packImage}
+            alt={card.name}
+            width={200}
+            height={220}
+            className="drop-shadow-2xl"
+          />
+        </motion.div>
+
+        {/* Bowl of chips beside the pack */}
+        <motion.div
+          className="absolute bottom-3 right-4 z-[6]"
+          animate={{ y: isHovered ? -6 : 0, scale: isHovered ? 1.05 : 1 }}
+          transition={{ duration: 0.4, delay: 0.05 }}
+        >
+          <Image
+            src={card.chipImage}
+            alt={`${card.name} chips`}
+            width={110}
+            height={110}
+            className="rounded-2xl object-cover shadow-lg"
+          />
+        </motion.div>
+      </div>
+
+      {/* Content area */}
+      <div className="relative z-10 bg-white p-6 pt-5">
+        <div className="flex items-center gap-2">
+          <span className="text-2xl">{card.emoji}</span>
+          <h3 className="text-xl font-black text-ink">{card.name}</h3>
+        </div>
+        <p className="mt-2 text-sm italic leading-relaxed text-ink/60">
+          &ldquo;{card.tagline}&rdquo;
+        </p>
+
+        {/* Slide-in Order Now button */}
+        <motion.div
+          className="mt-4 overflow-hidden"
+          animate={{ height: isHovered ? "auto" : 0, opacity: isHovered ? 1 : 0 }}
+          initial={{ height: 0, opacity: 0 }}
+          transition={{ duration: 0.35, ease: "easeOut" }}
+        >
+          <a
+            href="#contact"
+            className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-black text-white shadow-lg transition hover:scale-105"
+            style={{ background: card.accentColor }}
+          >
+            Order Now <ArrowRight size={16} />
+          </a>
+        </motion.div>
+      </div>
+    </motion.article>
+  );
+}
+
+function Gallery() {
   return (
     <section id="gallery" className="section-panel bg-[#f6fff4] py-24 sm:py-32">
       <div className="section-shell">
-        <SectionHeading eyebrow="Gallery" title="A visual identity made for snack aisles." copy="Three bold colour packs give ARUVI a premium but instantly appetising shelf presence." />
-        <div className="mt-14 grid gap-5 sm:grid-cols-3">
-          {gallery.map((item) => (
-            <button key={item[0]} type="button" onClick={() => setActive(item)} className="reveal-card focus-ring group overflow-hidden rounded-[26px] border border-leaf/12 bg-white p-4 text-left shadow-[0_20px_70px_rgba(46,139,87,0.1)] transition hover:-translate-y-2">
-              <span className="relative grid aspect-[4/3] place-items-center overflow-hidden rounded-[20px] bg-radial-warm">
-                <Image src={item[1]} alt={item[0]} width={420} height={320} loading="lazy" className="max-h-[88%] w-auto object-contain transition duration-500 group-hover:scale-110" />
-              </span>
-              <span className="mt-4 block font-black text-ink">{item[0]}</span>
-            </button>
+        {/* New heading */}
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="text-sm font-black uppercase tracking-[0.28em] text-leaf">Our Flavors</p>
+          <h2 className="mt-3 font-display text-[clamp(2.25rem,4.6vw,4.6rem)] font-black leading-[0.98] tracking-normal text-ink">
+            Every Crunch Tells a Story
+          </h2>
+          <p className="mt-5 text-base leading-8 text-ink/68 sm:text-lg">
+            Farm-fresh bananas. Hand-selected ingredients. Perfectly crisped for an unforgettable snack experience.
+          </p>
+        </div>
+
+        {/* Trust badges */}
+        <div className="mx-auto mt-10 flex flex-wrap items-center justify-center gap-4">
+          {trustBadges.map((badge) => (
+            <motion.div
+              key={badge.label}
+              className="flex items-center gap-2 rounded-full border border-leaf/15 bg-white/80 px-5 py-2.5 text-sm font-bold text-ink/80 shadow-sm backdrop-blur"
+              whileHover={{ scale: 1.05, y: -2 }}
+            >
+              <span className="text-lg">{badge.icon}</span>
+              {badge.label}
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Flavor cards */}
+        <div className="mt-14 grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
+          {flavorCards.map((card) => (
+            <FlavorCard key={card.name} card={card} />
           ))}
         </div>
       </div>
-      <AnimatePresence>
-        {active && (
-          <motion.div className="fixed inset-0 z-[90] grid place-items-center bg-ink/78 p-4 backdrop-blur-md" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setActive(null)}>
-            <div className="relative w-full max-w-3xl rounded-[28px] bg-cream p-6 shadow-2xl" onClick={(event) => event.stopPropagation()}>
-              <button type="button" aria-label="Close gallery preview" onClick={() => setActive(null)} className="absolute right-4 top-4 z-10 grid h-11 w-11 place-items-center rounded-full bg-white text-ink shadow"><X size={18} /></button>
-              <div className="grid min-h-[420px] place-items-center rounded-[22px] bg-radial-warm">
-                <Image src={active[1]} alt={active[0]} width={760} height={560} className="max-h-[520px] w-auto object-contain" />
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </section>
   );
 }
