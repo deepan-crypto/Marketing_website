@@ -50,15 +50,17 @@ const products = [
   {
     size: "100gm Pack",
     price: "50",
-    note: "Fast-moving single-serve pack for tea shops, stores, and counters.",
-    src: "/images/aruvi-pack-blue.svg",
+    note: "Fast-moving single-serve pack for tea shops, kiosks, counters, and quick trial purchases.",
+    chipImage: "/images/aruvi-chips-smoky.png",
+    pitch: "Impulse-ready crunch",
     specs: ["Product: Banana Chips", "Scope: All over Tamil Nadu", "Packing: 100gm", "MRP: Rs 50"],
   },
   {
     size: "200gm Pack",
     price: "80",
-    note: "Family-size crunch for supermarkets, bakeries, and premium retail.",
-    src: "/images/aruvi-pack-red.svg",
+    note: "Family-size value pack for supermarkets, provision stores, bakeries, and repeat snackers.",
+    chipImage: "/images/aruvi-chips-splash.png",
+    pitch: "Family-value bestseller",
     specs: ["Product: Banana Chips", "Scope: All over Tamil Nadu", "Packing: 200gm", "MRP: Rs 80"],
   },
 ];
@@ -73,9 +75,9 @@ const supplyDetails = [
 
 const whyCards = [
   ["Premium Quality", "Crisp chips with balanced seasoning and a satisfying golden crunch.", ShieldCheck],
-  ["Freshly Packed", "Packed quickly to lock in aroma, snap, and shelf-ready freshness.", PackageCheck],
+  ["Fresh Oil", "Fried in fresh oil for a cleaner taste and reliable crunch.", PackageCheck],
   ["Traditional Taste", "Inspired by Tamil Nadu snack counters and family favourites.", Wheat],
-  ["Hygienic Manufacturing", "Controlled production flow for cleaner batches and consistency.", Factory],
+  ["Clean Label", "No added colour and no added sugar, based on the product overview.", Factory],
   ["Available Across Tamil Nadu", "Built for retail partners, distributors, and fast-moving shelves.", Store],
 ] as const;
 
@@ -221,21 +223,30 @@ function ChipWaterfall() {
   );
 }
 
-function ProductPackTrio() {
-  const packs = [
-    ["/images/aruvi-pack-blue.png", "ARUVI Banana Chips blue pack", "left-[1%] top-[18%] w-[43%] -rotate-8 z-10"],
-    ["/images/aruvi-pack.png", "ARUVI Banana Chips green pack", "left-[28%] top-[2%] w-[48%] z-20"],
-    ["/images/aruvi-pack-red.png", "ARUVI Banana Chips red pack", "right-[1%] top-[18%] w-[43%] rotate-8 z-10"],
-  ] as const;
-
+function HeroPhotoLayer() {
   return (
-    <motion.div className="relative z-10 mx-auto aspect-[1.28/1] w-[min(94vw,700px)]" initial={{ opacity: 0, scale: 0.78 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1, delay: 0.7 }}>
-      <div className="absolute inset-x-12 bottom-5 h-24 rounded-full bg-leaf/25 blur-3xl" />
-      {packs.map(([src, alt, className], index) => (
-        <motion.div key={src} className={cn("absolute aspect-[4/3] transform-gpu", className)} animate={{ y: [0, index === 1 ? -10 : -7, 0] }} transition={{ duration: 4.8 + index * 0.35, repeat: Infinity, ease: "easeInOut" }}>
-          <Image src={src} alt={alt} fill sizes="(max-width: 768px) 42vw, 330px" priority className="object-contain drop-shadow-[0_34px_42px_rgba(21,88,41,0.28)]" />
-        </motion.div>
-      ))}
+    <motion.div
+      className="pointer-events-none absolute inset-y-0 right-0 z-[1] w-full overflow-hidden opacity-65 md:w-[62%] md:opacity-80"
+      initial={{ opacity: 0, scale: 1.04 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 1.2, delay: 0.35 }}
+      aria-hidden="true"
+    >
+      <Image
+        src="/images/aruvi-waterfall-chips.png"
+        alt=""
+        fill
+        priority
+        sizes="(max-width: 768px) 100vw, 62vw"
+        className="object-cover object-center"
+      />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#fff8cf] via-[#fff8cf]/55 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#ecffe5]/80 via-transparent to-[#fff8cf]/45" />
+      <motion.div
+        className="absolute bottom-[12%] left-[18%] h-28 w-[58%] rounded-full border border-banana/40 bg-banana/15 blur-sm"
+        animate={{ scale: [0.9, 1.12, 0.9], opacity: [0.32, 0.62, 0.32] }}
+        transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+      />
     </motion.div>
   );
 }
@@ -243,8 +254,7 @@ function ProductPackTrio() {
 function Hero() {
   return (
     <section id="hero" className="hero-aura relative flex min-h-screen items-center overflow-hidden pt-24">
-      <ChipWaterfall />
-      <FloatingChips />
+      <HeroPhotoLayer />
       <div className="section-shell relative z-10 grid items-center gap-8 pb-14 lg:grid-cols-[1fr_1.05fr] lg:pb-0">
         <motion.div className="max-w-2xl text-center lg:text-left" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.95 }}>
           <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-leaf/15 bg-white/70 px-4 py-2 text-sm font-black text-leaf shadow-sm backdrop-blur">
@@ -265,7 +275,7 @@ function Hero() {
             </a>
           </div>
         </motion.div>
-        <ProductPackTrio />
+        <div className="hidden lg:block" aria-hidden="true" />
       </div>
       <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-[#fffdf6] to-transparent" />
     </section>
@@ -302,13 +312,13 @@ function About() {
   return (
     <section id="about" className="section-panel py-24 sm:py-32">
       <div className="section-shell">
-        <SectionHeading eyebrow="Our Story" title="Traditional taste in a shelf-ready premium pack." copy="ARUVI Banana Chips brings the familiar comfort of Tamil Nadu snack culture into a modern FMCG format, made for everyday retail shelves and memorable first bites." />
+        <SectionHeading eyebrow="Our Story" title="Traditional taste in a shelf-ready premium pack." copy="ARUVI Banana Chips brings the familiar comfort of Tamil Nadu snack culture into a modern FMCG format, made with premium bananas, fresh oil, no added colour, and no added sugar." />
         <div className="mt-14 grid gap-5 md:grid-cols-3">
           {["Fresh ingredients", "Traditional taste", "Modern packaging"].map((title) => (
             <motion.article key={title} className="reveal-card rounded-[24px] border border-leaf/12 bg-white/78 p-7 shadow-[0_24px_70px_rgba(46,139,87,0.10)] backdrop-blur transition hover:-translate-y-2 hover:border-banana" whileHover={{ scale: 1.02 }}>
               <Leaf className="text-leaf" />
               <h3 className="mt-7 text-2xl font-black text-ink">{title}</h3>
-              <p className="mt-4 leading-7 text-ink/64">Selected bananas, balanced seasoning, hygienic packing, and a bold ARUVI pack built for retail shelves.</p>
+              <p className="mt-4 leading-7 text-ink/64">Premium bananas, fresh oil, clean-label ingredients, and a bold ARUVI pack built for Tamil Nadu retail shelves.</p>
             </motion.article>
           ))}
         </div>
@@ -342,18 +352,31 @@ function Products() {
   return (
     <section id="products" className="section-panel relative overflow-hidden py-24 sm:py-32">
       <div className="section-shell">
-        <SectionHeading eyebrow="Products" title="Two shelf-ready packs. One unmistakable crunch." copy="Clear pack sizes, attractive pricing, and a strong visual identity designed for impulse purchase and repeat orders." />
+        <SectionHeading eyebrow="Products" title="Two shelf-ready packs. One unmistakable crunch." copy="Fresh-looking chips, bold packs, attractive pricing, and a clear distributor margin designed to make customers ask for ARUVI at first sight." />
         <div className="mt-14 grid items-end gap-6 lg:grid-cols-2">
-          {products.map((product, index) => (
-            <motion.article key={product.size} className="reveal-card relative overflow-hidden rounded-[30px] border border-leaf/12 bg-white p-6 shadow-[0_30px_90px_rgba(46,139,87,0.12)] transition hover:-translate-y-2 sm:p-9" whileHover={{ scale: 1.015 }}>
+          {products.map((product) => (
+            <motion.article key={product.size} className="reveal-card group relative overflow-hidden rounded-[30px] border border-leaf/12 bg-white p-4 shadow-[0_30px_90px_rgba(46,139,87,0.12)] transition hover:-translate-y-2 sm:p-5" whileHover={{ scale: 1.015 }}>
               <div className="absolute -right-12 -top-12 h-44 w-44 rounded-full bg-banana/35 blur-2xl" />
-              <div className="grid items-center gap-7 sm:grid-cols-[0.85fr_1fr]">
-                <div className="relative mx-auto grid min-h-[250px] place-items-center">
-                  <motion.div className={cn("relative aspect-[4/3]", index === 0 ? "w-44" : "w-56")} animate={{ y: [0, -12, 0] }} transition={{ duration: 4.4, repeat: Infinity, ease: "easeInOut" }}>
-                    <Image src={product.src} alt={`${product.size} ARUVI Banana Chips pack`} fill sizes="280px" className="object-contain drop-shadow-[0_25px_30px_rgba(46,139,87,0.28)]" />
-                  </motion.div>
+              <div className="grid items-stretch gap-6 lg:grid-cols-[0.92fr_1fr]">
+                <div className="relative min-h-[360px] overflow-hidden rounded-[26px] bg-ink shadow-[inset_0_0_0_1px_rgba(255,255,255,0.22)]">
+                  <Image
+                    src={product.chipImage}
+                    alt={`Fresh golden banana chips for ${product.size}`}
+                    fill
+                    sizes="(max-width: 1024px) 90vw, 460px"
+                    className="object-cover transition duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/10 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-banana/20 via-transparent to-leaf/20 mix-blend-soft-light" />
+                  <div className="absolute left-4 top-4 rounded-full bg-white/90 px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-leaf shadow-lg">
+                    {product.pitch}
+                  </div>
+                  <div className="absolute bottom-4 left-4 max-w-[58%]">
+                    <p className="font-display text-3xl font-black leading-none text-white">Crispy golden banana chips</p>
+                    <p className="mt-2 text-sm font-bold text-white/78">Fresh oil. No added colour. No added sugar.</p>
+                  </div>
                 </div>
-                <div>
+                <div className="p-2 sm:p-5">
                   <p className="text-sm font-black uppercase tracking-[0.22em] text-leaf">ARUVI Banana Chips</p>
                   <h3 className="mt-3 text-4xl font-black text-ink">{product.size}</h3>
                   <p className="mt-4 text-6xl font-black text-flame"><span className="text-3xl align-top">Rs</span>{product.price}</p>
@@ -369,8 +392,8 @@ function Products() {
                       );
                     })}
                   </dl>
-                  <a href="#contact" className="focus-ring mt-7 inline-flex items-center gap-2 rounded-full bg-leaf px-5 py-3 font-black text-white transition hover:-translate-y-1 hover:bg-ink">
-                    Enquire This Pack <ArrowRight size={18} />
+                  <a href="#contact" className="focus-ring mt-7 inline-flex items-center gap-2 rounded-full bg-leaf px-5 py-3 font-black text-white shadow-lg shadow-leaf/20 transition hover:-translate-y-1 hover:bg-ink">
+                    Place Distributor Enquiry <ArrowRight size={18} />
                   </a>
                 </div>
               </div>
@@ -507,8 +530,8 @@ function Contact() {
           <h2 className="mt-3 font-display text-[clamp(2.25rem,4.8vw,4.8rem)] font-black leading-[0.98]">Start your ARUVI distributor enquiry.</h2>
           <p className="mt-6 text-lg leading-8 text-white/70">Share your district and business details for distributor leads, retailer onboarding, and supply conversations.</p>
           <div className="mt-10 grid gap-4 text-white/82">
-            <a href="tel:+919876543210" className="flex items-center gap-3 rounded-2xl bg-white/8 p-4"><Phone className="text-banana" />+91 98765 43210</a>
-            <a href="mailto:distributors@aruvi.example" className="flex items-center gap-3 rounded-2xl bg-white/8 p-4"><Mail className="text-banana" />distributors@aruvi.example</a>
+            <a href="tel:+918825742002" className="flex items-center gap-3 rounded-2xl bg-white/8 p-4"><Phone className="text-banana" />8825742002</a>
+            <div className="flex items-start gap-3 rounded-2xl bg-white/8 p-4"><MapPin className="mt-1 text-banana" />11/4, Nannagaram Road<br />Courtallam, Tenkasi<br />Tamil Nadu</div>
           </div>
         </div>
         <form onSubmit={submit} className="rounded-[30px] border border-white/10 bg-white p-5 text-ink shadow-[0_30px_90px_rgba(0,0,0,0.2)] sm:p-8">
@@ -531,7 +554,7 @@ function Footer() {
       <div className="mx-auto flex max-w-6xl flex-col gap-8 md:flex-row md:items-center md:justify-between">
         <div className="flex items-center gap-3"><span className="grid h-11 w-11 place-items-center rounded-full bg-banana text-base font-black text-ink">A</span><div><p className="font-black">ARUVI Banana Chips</p><p className="text-sm text-white/55">Fresh. Crunchy. Irresistible.</p></div></div>
         <div className="flex flex-wrap gap-3">{navItems.map((item) => <a key={item} href={`#${item.toLowerCase()}`} className="rounded-full bg-white/8 px-4 py-2 text-sm font-bold transition hover:bg-white/14">{item}</a>)}</div>
-        <div className="flex gap-2">{[Instagram, Mail, Phone].map((Icon, index) => <a key={index} href={index === 0 ? "https://instagram.com" : index === 1 ? "mailto:distributors@aruvi.example" : "tel:+919876543210"} aria-label={index === 0 ? "ARUVI Instagram" : index === 1 ? "Email ARUVI" : "Call ARUVI"} className="grid h-11 w-11 place-items-center rounded-full bg-white/8 transition hover:bg-banana hover:text-ink"><Icon size={18} /></a>)}</div>
+        <div className="flex gap-2">{[Instagram, Mail, Phone].map((Icon, index) => <a key={index} href={index === 0 ? "https://instagram.com" : index === 1 ? "#contact" : "tel:+918825742002"} aria-label={index === 0 ? "ARUVI Instagram" : index === 1 ? "Contact ARUVI" : "Call ARUVI"} className="grid h-11 w-11 place-items-center rounded-full bg-white/8 transition hover:bg-banana hover:text-ink"><Icon size={18} /></a>)}</div>
       </div>
     </footer>
   );
