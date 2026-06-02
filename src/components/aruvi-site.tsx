@@ -17,6 +17,8 @@ import {
   PackageCheck,
   Phone,
   ShieldCheck,
+  ShoppingBag,
+  ShoppingCart,
   Sparkles,
   Star,
   Store,
@@ -575,24 +577,75 @@ function Statistics() {
 }
 
 function Testimonials() {
-  const [active, setActive] = useState(0);
-
-  useEffect(() => {
-    const timer = window.setInterval(() => setActive((current) => (current + 1) % testimonials.length), 4800);
-    return () => window.clearInterval(timer);
-  }, []);
-
-  const testimonial = testimonials[active];
-
   return (
-    <section className="section-panel py-24 sm:py-32">
+    <section className="section-panel py-24 sm:py-32 bg-[#fffdf6]">
       <div className="section-shell">
-        <SectionHeading eyebrow="Testimonials" title="Retail partners remember the crunch." copy="A premium snack brand grows when distributors and retailers can trust the product, pack, and supply rhythm." />
-        <div className="mx-auto mt-14 max-w-4xl rounded-[32px] border border-leaf/12 bg-white p-7 shadow-[0_28px_90px_rgba(46,139,87,0.12)] sm:p-10">
-          <div className="flex gap-1 text-banana">{Array.from({ length: 5 }).map((_, index) => <Star key={index} fill="currentColor" size={20} />)}</div>
-          <p className="mt-8 font-display text-3xl font-black leading-tight text-ink sm:text-5xl">&quot;{testimonial[0]}&quot;</p>
-          <p className="mt-8 font-black text-ink">{testimonial[1]}</p>
-          <p className="text-sm text-ink/58">{testimonial[2]}</p>
+        <div className="mx-auto max-w-3xl text-center mb-16">
+          <p className="text-sm font-black uppercase tracking-[0.28em] text-leaf">Testimonials</p>
+          <h2 className="mt-3 font-display text-[clamp(2.25rem,4.6vw,4.6rem)] font-black leading-[0.98] tracking-normal text-ink">
+            Retail partners remember the crunch.
+          </h2>
+          
+          {/* Stats Row */}
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-ink/80 font-bold text-lg">
+            <span className="flex items-center gap-2">
+              <Store className="text-leaf" size={20} /> 500+ Stores
+            </span>
+            <span className="flex items-center gap-2">
+              <Truck className="text-banana" size={20} /> 50+ Distributors
+            </span>
+            <span className="flex items-center gap-2">
+              <Star className="text-flame" size={20} fill="currentColor" /> 4.9 Rating
+            </span>
+          </div>
+        </div>
+
+        {/* Testimonial Cards */}
+        <div className="grid gap-6 md:grid-cols-3">
+          {testimonialsData.map((testimonial, i) => (
+            <motion.div 
+              key={i}
+              className="reveal-card relative flex flex-col justify-between rounded-[28px] border border-leaf/12 bg-white p-8 shadow-[0_24px_80px_rgba(46,139,87,0.08)] transition-all hover:border-banana hover:shadow-[0_24px_80px_rgba(244,196,48,0.15)]"
+              whileHover={{ y: -8 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div>
+                <div className="flex gap-1 text-banana mb-6">
+                  {Array.from({ length: 5 }).map((_, index) => <Star key={index} fill="currentColor" size={18} />)}
+                </div>
+                <p className="text-xl font-bold leading-relaxed text-ink/90 italic">
+                  &quot;{testimonial.quote}&quot;
+                </p>
+              </div>
+              
+              <div className="mt-8 flex items-end justify-between">
+                <div>
+                  <p className="font-black text-ink">{testimonial.author}</p>
+                  <p className="text-sm text-ink/60 mt-1">{testimonial.role}</p>
+                </div>
+                <div className="w-14 h-16 sm:w-16 sm:h-20 relative shrink-0">
+                  <Image 
+                    src={testimonial.packImage} 
+                    alt="ARUVI Pack" 
+                    fill 
+                    className="object-contain drop-shadow-md" 
+                  />
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Trusted By Logos */}
+        <div className="mt-24 pt-12 border-t border-leaf/10 text-center">
+          <p className="text-sm font-black uppercase tracking-[0.2em] text-ink/40 mb-10">Trusted by leading retail partners</p>
+          <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-700">
+            <div className="flex items-center gap-2 font-black text-2xl text-ink"><Store size={32} className="text-leaf" /> FreshMart</div>
+            <div className="flex items-center gap-2 font-black text-2xl text-ink"><ShoppingCart size={32} className="text-banana" /> DailyNeeds</div>
+            <div className="flex items-center gap-2 font-black text-2xl text-ink"><ShoppingBag size={32} className="text-flame" /> CitySuper</div>
+            <div className="flex items-center gap-2 font-black text-2xl text-ink"><Factory size={32} className="text-leaf" /> MegaRetail</div>
+            <div className="flex items-center gap-2 font-black text-2xl text-ink"><Store size={32} className="text-banana" /> TamilStores</div>
+          </div>
         </div>
       </div>
     </section>
