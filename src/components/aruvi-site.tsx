@@ -123,17 +123,32 @@ const flavorCards = [
 ] as const;
 
 const trustBadges = [
-  { icon: "🌿", label: "Natural Ingredients" },
-  { icon: "🚫", label: "No Preservatives" },
-  { icon: "🔥", label: "Freshly Prepared" },
-  { icon: "⭐", label: "Loved by Thousands" },
+  { icon: "", label: "Natural Ingredients" },
+  { icon: "", label: "No Preservatives" },
+  { icon: "", label: "Freshly Prepared" },
+  { icon: "", label: "Loved by Thousands" },
 ];
 
-const testimonials = [
-  ["ARUVI packs look premium on shelf, and the product moves quickly because the crunch is consistent.", "S. Prakash", "Distributor, Coimbatore"],
-  ["Our customers ask for the ARUVI pack by name. Fresh stock and clear margins make it easy to sell.", "M. Revathi", "Retail Partner, Madurai"],
-  ["The taste feels traditional, but the packaging has a modern finish. That combination works.", "A. Natarajan", "Supermarket Buyer, Trichy"],
-] as const;
+const testimonialsData = [
+  {
+    quote: "ARUVI packs look premium on shelf, and the product moves quickly because the crunch is consistent.",
+    author: "S. Prakash",
+    role: "Distributor, Coimbatore",
+    packImage: "/images/aruvi-pack-blue.svg",
+  },
+  {
+    quote: "Our customers ask for the ARUVI pack by name. Fresh stock and clear margins make it easy to sell.",
+    author: "M. Revathi",
+    role: "Retail Partner, Madurai",
+    packImage: "/images/aruvi-pack-red.svg",
+  },
+  {
+    quote: "The taste feels traditional, but the packaging has a modern finish. That combination works.",
+    author: "A. Natarajan",
+    role: "Supermarket Buyer, Trichy",
+    packImage: "/images/aruvi-pack.svg",
+  }
+];
 
 function cn(...classes: Array<string | false | null | undefined>) {
   return classes.filter(Boolean).join(" ");
