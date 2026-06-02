@@ -509,7 +509,7 @@ function Products() {
                   </div>
                   <div className="absolute bottom-4 left-4 max-w-[58%]">
                     <p className="font-display text-3xl font-black leading-none text-white">Crispy golden banana chips</p>
-                    <p className="mt-2 text-sm font-bold text-white/78">Fresh oil. No added colour. No added sugar.</p>
+                    <p className="mt-2 text-sm font-bold text-white">Fresh oil. No added colour. No added sugar.</p>
                   </div>
                 </div>
                 <div className="p-2 sm:p-5">
