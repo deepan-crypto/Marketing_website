@@ -56,7 +56,7 @@ const products = [
     size: "100gm Pack",
     price: "50",
     note: "Fast-moving single-serve pack for tea shops, kiosks, counters, and quick trial purchases.",
-    chipImage: "/images/aruvi-chips-smoky.png",
+    chipImage: "/images/user-img-5.png",
     pitch: "Impulse-ready crunch",
     specs: ["Product: Banana Chips", "Scope: All over Tamil Nadu", "Packing: 100gm", "MRP: Rs 50"],
   },
@@ -64,7 +64,7 @@ const products = [
     size: "200gm Pack",
     price: "80",
     note: "Family-size value pack for supermarkets, provision stores, bakeries, and repeat snackers.",
-    chipImage: "/images/aruvi-chips-splash.png",
+    chipImage: "/images/user-img-1.jpg",
     pitch: "Family-value bestseller",
     specs: ["Product: Banana Chips", "Scope: All over Tamil Nadu", "Packing: 200gm", "MRP: Rs 80"],
   },
@@ -92,7 +92,7 @@ const flavorCards = [
     name: "Classic Salted",
     tagline: "Thin, crispy, perfectly seasoned.",
     packImage: "/images/aruvi-pack-blue.svg",
-    chipImage: "/images/chips-classic-salted.png",
+    chipImage: "/images/user-img-1.jpg",
     badge: "🏆 Best Seller",
     badgeColor: "from-amber-400 to-yellow-500",
     accentColor: "#3b82f6",
@@ -103,7 +103,7 @@ const flavorCards = [
     name: "Spicy Masala",
     tagline: "A fiery crunch with every bite.",
     packImage: "/images/aruvi-pack-red.svg",
-    chipImage: "/images/chips-spicy-masala.png",
+    chipImage: "/images/user-img-2.png",
     badge: "🔥 Most Ordered",
     badgeColor: "from-red-400 to-orange-500",
     accentColor: "#ef4444",
@@ -114,7 +114,7 @@ const flavorCards = [
     name: "Coconut Special",
     tagline: "Traditional taste with a modern twist.",
     packImage: "/images/aruvi-pack.svg",
-    chipImage: "/images/chips-coconut-special.png",
+    chipImage: "/images/user-img-4.png",
     badge: "⭐ Customer Favorite",
     badgeColor: "from-emerald-400 to-green-500",
     accentColor: "#2E8B57",
@@ -386,7 +386,7 @@ function About() {
           >
             <div className="relative overflow-hidden rounded-[32px] shadow-[0_32px_100px_rgba(46,139,87,0.18)]">
               <Image
-                src="/images/about-hero-chips.png"
+                src="/images/user-img-3.png"
                 alt="Bowl of crispy banana chips with fresh bananas"
                 width={600}
                 height={700}
